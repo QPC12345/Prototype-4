@@ -20,7 +20,7 @@ public class House : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isClicked() && bank.getBalance() >= level * upgradePrice) {
+        if (isClicked() && bank.getBalance() >= (level+1) * upgradePrice) {
             level++;
             bank.updateArray(y, x, level);
             bank.subtractFromBalance(level * upgradePrice);

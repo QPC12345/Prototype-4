@@ -10,9 +10,13 @@ public class Bank : MonoBehaviour
     public float interval = 1.0f;
     private int[,] grid = new int[3, 7];
     public TextMeshPro TMP;
+    private float timer = 0.0f;
+    private AudioSource audio;
+    public AudioClip clip;
     // Start is called before the first frame update
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         TMP.text = "Balance: $50 | Interest: $0/sec";
         for(int y = 0; y < 3; y++) {
             for(int x = 0; x < 7; x++) {
@@ -24,10 +28,15 @@ public class Bank : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int currInterest = getInterest();
-        balance+=currInterest;
-        TMP.text = "Balance: $" + balance + " | Interest: $" + currInterest + "/sec";
-        StartCoroutine(Wait(interval));
+        if (timer >= interval) {
+            int currInterest = getInterest();
+            balance+=currInterest;
+            TMP.text = "Balance: $" + balance + " | Interest: $" + currInterest + "/sec";
+            timer = 0.0f;
+        }
+        else {
+            timer+=Time.deltaTime;
+        }
     }
 
     public void updateArray(int y, int x, int level) {
@@ -40,6 +49,8 @@ public class Bank : MonoBehaviour
 
     public void subtractFromBalance(int val) {
         balance-=val;
+        TMP.text = "Balance: $" + balance + " | Interest: $" + getInterest() + "/sec";
+        audio.PlayOneShot(clip);
     }
 
     public int getInterest() {
@@ -50,10 +61,5 @@ public class Bank : MonoBehaviour
             }
         }
         return sum;
-    }
-
-    private IEnumerator Wait(float time)
-    {
-        yield return new WaitForSeconds(time);
     }
 }
