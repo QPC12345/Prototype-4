@@ -4948,7 +4948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599e2e4e53cd844f78d5dda742395db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interest: 10
+  interest: 5
   interval: 1
   TMP: {fileID: 1288022125}
   clip: {fileID: 8300000, guid: 9fa30e38447954503b5a8172727896c7, type: 3}
